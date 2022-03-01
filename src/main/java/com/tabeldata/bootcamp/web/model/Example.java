@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class Example {
 
+    private String id;
     @NotNull(message = "gak boleh null")
     @NotEmpty(message = "gak boleh kosong")
     private String message;
