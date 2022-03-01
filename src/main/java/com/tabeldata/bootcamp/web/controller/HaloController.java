@@ -28,7 +28,7 @@ public class HaloController {
         return data;
     }
 
-    @GetMapping(value = "/input")
+    @PostMapping(value = "/input")
     public Example inputData(@RequestBody @Valid Example data){
         data.setTransactionDatetime(LocalDateTime.now());
         data.setTransactionDate(LocalDate.now());
