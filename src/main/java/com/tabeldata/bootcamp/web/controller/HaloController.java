@@ -3,6 +3,7 @@ package com.tabeldata.bootcamp.web.controller;
 import com.tabeldata.bootcamp.web.model.Example;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,9 +29,10 @@ public class HaloController {
     }
 
     @GetMapping(value = "/input")
-    public Example inputData(@RequestBody Example data){
+    public Example inputData(@RequestBody @Valid Example data){
         data.setTransactionDatetime(LocalDateTime.now());
         data.setTransactionDate(LocalDate.now());
         return data;
     }
+
 }
