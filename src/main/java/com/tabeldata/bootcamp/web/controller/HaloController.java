@@ -3,6 +3,8 @@ package com.tabeldata.bootcamp.web.controller;
 import com.tabeldata.bootcamp.web.dao.ExampleDao;
 import com.tabeldata.bootcamp.web.model.Example;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,9 +54,30 @@ public class HaloController {
     }
 
     @PostMapping(value = "/input")
-    public Example inputData(@RequestBody @Valid Example data) {
-        this.dao.insert(data);
-        return data;
+    public ResponseEntity<?> inputData(@RequestBody @Valid Example data) {
+        try {
+            this.dao.insert(data);
+            return ResponseEntity.ok().build();
+        } catch (DuplicateKeyException dke) {
+            dke.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body("Duplicate data");
+        }catch (DataAccessException dea){
+            dea.printStackTrace();
+            return ResponseEntity.internalServerError()
+                    .body("database gak konek atau sql salah");
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            return ResponseEntity.internalServerError()
+                    .body("Gak tau errornya apa! check sendiri");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable String id) {
+        this.dao.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 }
