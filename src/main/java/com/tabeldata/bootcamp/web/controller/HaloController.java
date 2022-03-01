@@ -62,12 +62,11 @@ public class HaloController {
             dke.printStackTrace();
             return ResponseEntity.badRequest()
                     .body("Duplicate data");
-        }catch (DataAccessException dea){
+        } catch (DataAccessException dea) {
             dea.printStackTrace();
             return ResponseEntity.internalServerError()
                     .body("database gak konek atau sql salah");
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return ResponseEntity.internalServerError()
                     .body("Gak tau errornya apa! check sendiri");
